@@ -1,0 +1,1 @@
+window.MONITOR_API_URL = ""; // informe a URL do backend Render, sem barra no final
