@@ -24,7 +24,10 @@ function requireAgent(req, res, next) {
   const supplied = req.header("authorization")?.replace(/^Bearer\s+/i, "").trim()
     || req.header("x-agent-token") || "";
   if (!agentToken) return res.status(503).json({ error: "jarvis_agent_token_not_configured" });
-  if (!supplied || !crypto.timingSafeEqual(Buffer.from(supplied), Buffer.from(agentToken))) {
+  const suppliedBuffer = Buffer.from(supplied);
+  const expectedBuffer = Buffer.from(agentToken);
+  if (!supplied || suppliedBuffer.length !== expectedBuffer.length
+      || !crypto.timingSafeEqual(suppliedBuffer, expectedBuffer)) {
     return res.status(401).json({ error: "invalid_agent_token" });
   }
   next();
