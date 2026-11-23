@@ -20,7 +20,7 @@ const stamp = () => new Date().toISOString();
 const makeAdminToken = payload => { const body = Buffer.from(JSON.stringify(payload)).toString("base64url"); const sig = crypto.createHmac("sha256", sessionSecret).update(body).digest("base64url"); return body + "." + sig; };
 function requireAdmin(req, res, next) {
   if (!sessionSecret) return res.status(503).json({ error: "admin_session_secret_not_configured" });
-  const raw = (req.get("authorization") || "").replace(/^Bearer\\s+/i, "");
+  const raw = (req.get("authorization") || "").replace(/^Bearer\s+/i, "");
   const [body, signature] = raw.split(".");
   if (!body || !signature) return res.status(401).json({ error: "admin_auth_required" });
   const expected = crypto.createHmac("sha256", sessionSecret).update(body).digest();
