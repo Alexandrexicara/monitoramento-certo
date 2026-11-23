@@ -13,3 +13,9 @@ services:
         sync: false
       - key: COLLECTOR_TOKEN
         generateValue: true
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_SESSION_SECRET
+        generateValue: true
+      - key: WEB_ORIGIN
+        sync: false
